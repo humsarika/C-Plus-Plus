@@ -2,7 +2,7 @@
 
 ## Before contributing
 
-Welcome to [TheAlgorithms/C-Plus-Plus](https://github.com/TheAlgorithms/C-Plus-Plus)! Before submitting pull requests, please make sure that you have **read the whole guidelines**. If you have any doubts about this contribution guide, please open [an issue](https://github.com/TheAlgorithms/C-Plus-Plus/issues/new/choose) or ask in our [Discord server](https://discord.gg/c7MnfGFGa6), and clearly state your concerns.
+Welcome to [TheAlgorithms/C-Plus-Plus](https://github.com/TheAlgorithms/C-Plus-Plus)! Before submitting pull requests, please make sure that you have **read the whole guidelines**. If you have any doubts about this contribution guide, please open [an issue](https://github.com/TheAlgorithms/C-Plus-Plus/issues/new/choose) or ask on our [Discord server](https://the-algorithms.com/discord/), and clearly state your concerns.
 
 ## Contributing
 
@@ -15,13 +15,13 @@ Welcome to [TheAlgorithms/C-Plus-Plus](https://github.com/TheAlgorithms/C-Plus-P
 Being a contributor at The Algorithms, we request you to follow the points mentioned below:
 
 - You did your own work.
-  - No plagiarism allowed. Any plagiarized work will not be merged.
-- Your work will be distributed under the [MIT License](https://github.com/TheAlgoritms/C-Plus-Plus/blob/master/LICENSE) once your pull request has been merged.
+  - No plagiarism is allowed. Any plagiarized work will not be merged.
+- Your work will be distributed under the [MIT License](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/LICENSE) once your pull request has been merged.
 - Please follow the repository guidelines and standards mentioned below.
 
 **New implementation** New implementations are welcome!
 
-You can add new algorithms or data structures which are **not present in the repository** or that can **improve** the old implementations (**documentation**, **improving test cases**, removing bugs or in any other resonable sense)
+You can add new algorithms or data structures that are **not present in the repository** or that can **improve** the old implementations (**documentation**, **improving test cases**, removing bugs, or in any other reasonable sense)
 
 **Issues** Please avoid opening issues asking to be "assigned” to a particular algorithm. This merely creates unnecessary noise for maintainers. Instead, please submit your implementation in a pull request, and it will be evaluated by project maintainers.
 
@@ -30,15 +30,15 @@ You can add new algorithms or data structures which are **not present in the rep
 #### Code
 
 - Please use the directory structure of the repository.
-- Make sure the file extensions should be `*.hpp`, `*.h` or `*.cpp`.
+- Make sure the file extensions are `*.hpp`, `*.h` or `*.cpp`.
 - Don't use **`bits/stdc++.h`** because this is quite Linux-specific and slows down the compilation process.
-- Organize your code using **`struct`**, **`class`**, and/or **`namespace`** keywords
-- If an implementation of the algorithm already exists, please refer to the [file-name section below](#new-file-name-guidelines).
+- Organize your code using **`struct`**, **`class`**, and/or **`namespace`** keywords.
+- If an implementation of the algorithm already exists, please refer to the [file-name section below](#file-name-guidelines).
 - You can suggest reasonable changes to existing algorithms.
 - Strictly use snake_case (underscore_separated) in filenames.
 - If you have added or modified code, please make sure the code compiles before submitting.
-- Our automated testing runs [__CMake__](https://cmake.org/) on all the pull requests, so please be sure that your code passes before submitting.
-- Please conform to [Doxygen](https://www.doxygen.nl/manual/docblocks.html) standard and document the code as much as possible. This not only facilitates the readers but also generates the correct info on the website.
+- Our automated testing runs [**CMake**](https://cmake.org/) on all the pull requests, so please be sure that your code passes before submitting.
+- Please conform to [Doxygen](https://www.doxygen.nl/manual/docblocks.html) standards and document the code as much as possible. This not only facilitates the readers but also generates the correct info on the website.
 - **Be consistent in the use of these guidelines.**
 
 #### Documentation
@@ -54,13 +54,92 @@ You can add new algorithms or data structures which are **not present in the rep
 - Make sure to add examples and test cases in your `main()` function.
 - If you find an algorithm or document without tests, please feel free to create a pull request or issue describing suggested changes.
 - Please try to add one or more `test()` functions that will invoke the algorithm implementation on random test data with the expected output. Use the `assert()` function to confirm that the tests will pass. Requires including the `cassert` library.
+- Test cases should fully verify that your program works as expected. Rather than asking the user for input, it's best to make sure the given output is the correct output.
+
+##### Self-test examples
+
+1. [Quick sort](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/sorting/quick_sort.cpp#L137) testing (complex).
+
+```cpp
+// Let's make sure the array of numbers is ordered after calling the function.
+std::vector<uint64_t> arr = {5, 3, 8, 12, 14, 16, 28, 96, 2, 5977};
+std::vector<uint64_t> arr_sorted = sorting::quick_sort::quick_sort(
+    arr, 0, int(std::end(arr) - std::begin(arr)) - 1);
+
+assert(std::is_sorted(std::begin(arr_sorted), std::end(arr_sorted)));
+```
+
+2. [Subset Sum](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/backtracking/subset_sum.cpp#L58) testing (medium).
+
+```cpp
+std::vector<int32_t> array1 = {-7, -3, -2, 5, 8};  // input array
+assert(backtracking::subset_sum::number_of_subsets(0, array1) ==
+    2);  // first argument in subset_sum function is the required sum and
+         // second is the input array
+```
+
+3. Small C++ program that showcases and explains the use of tests.
+
+```cpp
+#include <iostream>  /// for IO operations
+#include <vector>    /// for std::vector
+#include <cassert>   /// for assert
+
+/**
+ * @brief Verifies if the given array
+ * contains the given number on it.
+ * @tparam T the type of array (e.g., `int`, `float`, etc.)
+ * @param arr the array to be used for checking
+ * @param number the number to check if it's inside the array
+ * @return false if the number was NOT found in the array
+ * @return true if the number WAS found in the array
+ */
+template <typename T>
+bool is_number_on_array(const std::vector<T> &arr, const int &number) {
+    for (int i = 0; i < sizeof(arr) / sizeof(int); i++) {
+        if (arr[i] == number) {
+            return true;
+        }
+        else {
+            // Number not in the current index, keep searching.
+        }
+    }
+
+    return false;
+}
+
+/**
+ * @brief Self-test implementations
+ * @returns void
+ */
+static void tests() {
+    std::vector<int> arr = { 9, 14, 21, 98, 67 };
+
+    assert(is_number_on_array(arr, 9) == true);
+    assert(is_number_on_array(arr, 4) == false);
+    assert(is_number_on_array(arr, 98) == true);
+    assert(is_number_on_array(arr, 512) == false);
+
+    std::cout << "All tests have successfully passed!\n";
+}
+
+/**
+ * @brief Main function
+ * @returns 0 on exit
+ */
+int main() {
+    tests(); // run self-test implementations
+    return 0;
+}
+```
 
 #### Typical structure of a program
 
 ```cpp
 /**
  * @file
- * @brief Add one line description here
+ * @brief Add one-line description here. Should contain a Wikipedia
+ * link or another source explaining the algorithm/implementation.
  * @details
  * This is a multi-line
  * description containing links, references,
@@ -73,7 +152,8 @@ You can add new algorithms or data structures which are **not present in the rep
 #include             /// for `some function here`
 
 /**
- * @namespace <check from other files in this repo>
+ * @namespace
+ * @brief <namespace description>
  */
 namespace name {
 
@@ -82,11 +162,11 @@ namespace name {
  */
 class class_name {
  private:
-    int variable;  ///< short info of this variable
+    int variable;   ///< short info of this variable
     char *message;  ///< short info
 
  public:
-    // other members also documented as below
+    // other members should be also documented as below
 }
 
 /**
@@ -106,7 +186,7 @@ bool func(int param1, T param2) {
 
     return true;
 }
-} // namespace name
+}  // namespace name
 
 /**
  * @brief Self-test implementations
@@ -117,6 +197,9 @@ static void test() {
     assert(func(...) == ...); // this ensures that the algorithm works as expected
 
     // can have multiple checks
+
+    // this lets the user know that the tests have passed
+    std::cout << "All tests have successfully passed!\n";
 }
 
 /**
@@ -132,7 +215,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-#### New File Name guidelines
+#### File Name guidelines
 
 - Use lowercase words with ``"_"`` as a separator
 - For instance
@@ -144,9 +227,9 @@ my_new_cpp_class.cpp    is correct format
 
 - It will be used to dynamically create a directory of files and implementation.
 - File name validation will run on Docker to ensure validity.
-- If an implementation of the algorithm already exists and your version is different from that implemented, please use incremental numeric digit as a suffix. For example: if `median_search.cpp` already exists in the `search` folder, and you are contributing a new implementation, the filename should be `median_search2.cpp` and for a third implementation, `median_search3.cpp`.
+- If an implementation of the algorithm already exists and your version is different from that implemented, please use incremental numeric digit as a suffix. For example: if `median_search.cpp` already exists in the `search` folder, and you are contributing a new implementation, the filename should be `median_search2.cpp`. For a third implementation, `median_search3.cpp`, and so on.
 
-#### New Directory guidelines
+#### Directory guidelines
 
 - We recommend adding files to existing directories as much as possible.
 - Use lowercase words with ``"_"`` as separator ( no spaces or ```"-"``` allowed )
@@ -159,6 +242,40 @@ some_new_fancy_category         is correct
 
 - Filepaths will be used to dynamically create a directory of our algorithms.
 - Filepath validation will run on GitHub Actions to ensure compliance.
+
+##### Integrating CMake in a new directory
+
+In case a new directory is 100% required, `CMakeLists.txt` file in the root directory needs to be updated, and a new `CMakeLists.txt` file needs to be created within the new directory.
+
+An example of how your new `CMakeLists.txt` file should look like. Note that if there are any extra libraries/setup required, you must include that in this file as well.
+
+```cmake
+# If necessary, use the RELATIVE flag, otherwise each source file may be listed
+# with full pathname. The RELATIVE flag makes it easier to extract an executable's name
+# automatically.
+
+file( GLOB APP_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp )
+foreach( testsourcefile ${APP_SOURCES} )
+    string( REPLACE ".cpp" "" testname ${testsourcefile} ) # File type. Example: `.cpp`
+    add_executable( ${testname} ${testsourcefile} )
+
+    set_target_properties(${testname} PROPERTIES LINKER_LANGUAGE CXX)
+    if(OpenMP_CXX_FOUND)
+        target_link_libraries(${testname} OpenMP::OpenMP_CXX)
+    endif()
+    install(TARGETS ${testname} DESTINATION "bin/<foldername>") # Folder name. Do NOT include `<>`
+
+endforeach( testsourcefile ${APP_SOURCES} )
+```
+
+The `CMakeLists.txt` file in the root directory should be updated to include the new directory.\
+Include your new directory after the last subdirectory. Example:
+
+```cmake
+...
+add_subdirectory(divide_and_conquer)
+add_subdirectory(<foldername>)
+```
 
 #### Commit Guidelines
 
@@ -175,7 +292,8 @@ Examples of commit messages with semantic prefixes:
 fix: xyz algorithm bug
 feat: add xyx algorithm, class xyz
 test: add test for xyz algorithm
-docs: add comments and explanation to xyz algorithm
+docs: add comments and explanation to xyz algorithm/improve contributing guidelines
+chore: update Gitpod badge
 ```
 
 Common prefixes:
@@ -184,6 +302,7 @@ Common prefixes:
 - feat: A new feature
 - docs: Documentation changes
 - test: Correct existing tests or add new ones
+- chore: Miscellaneous changes that do not match any of the above.
 
 ### Pull Requests
 
@@ -208,7 +327,7 @@ clang-tidy --fix --quiet -p build subfolder/file_to_check.cpp --
 
 #### Code Formatter
 
-[`__clang-format__`](https://clang.llvm.org/docs/ClangFormat.html) is used for code forrmating.
+[`clang-format`](https://clang.llvm.org/docs/ClangFormat.html) is used for code formatting.
 
 - Installation (only needs to be installed once.)
   - Mac (using home-brew): `brew install clang-format`
